@@ -22,3 +22,25 @@ end
     title --> repr("text/plain", p)
     x, y
 end
+
+# Display the polynomial nicely
+exponent_text(i, ::MIME) = "^$(i)"
+exponent_text(i, ::MIME"text/html") = "<sup>$(i)</sup>"
+exponent_text(i, ::MIME"text/latex") = "^{$(i)}"
+
+using Polynomials
+
+function Polynomials.printexponent(io, var, i, mimetype::MIME)
+    if i == 0
+        return
+    elseif i == 1
+        print(io, var)
+    else
+        print(io, var, exponent_text(i, mimetype))
+    end
+end
+
+
+
+
+        
